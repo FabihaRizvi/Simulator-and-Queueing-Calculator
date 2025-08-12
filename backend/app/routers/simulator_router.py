@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
-from backend.app.models.simulator_models import SimulationParams, SimulationResponse
-from backend.app.services.simulator_service import run_simulation
+from app.models.simulator_models import SimulationParams, SimulationResponse
+from app.services.simulator_service import run_simulation
 
 router = APIRouter()
 

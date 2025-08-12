@@ -1,6 +1,6 @@
 import random
 from typing import List
-from backend.app.models.simulator_models import SimulationParams, SimulationResult, SimulationResponse
+from app.models.simulator_models import SimulationParams, SimulationResult, SimulationResponse
 
 class Simulator:
     def __init__(self, params: SimulationParams):
