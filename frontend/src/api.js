@@ -1,17 +1,28 @@
-export const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = "http://127.0.0.1:8000/api";
 
-export async function calculateQueue(data) {
-  const response = await fetch(`${API_BASE}/api/simulate`,  {
+export async function simulate(data) {
+  const res = await fetch(`${API_BASE}/simulate`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
+  return res.json();
+}
 
-  if (!response.ok) {
-    throw new Error("API request failed");
-  }
+export async function simulatePriority(data) {
+  const res = await fetch(`${API_BASE}/simulate/priority`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  return res.json();
+}
 
-  return await response.json();
+export async function queueingCalculate(data) {
+  const res = await fetch(`${API_BASE}/queueing/calculate`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  return res.json();
 }
