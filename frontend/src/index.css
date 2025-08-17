@@ -1,51 +1,107 @@
 body {
-  font-family: Arial, sans-serif;
-  background: #f5f5f5;
   margin: 0;
-  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6f9;
+  color: #333;
 }
 
-.app {
-  max-width: 600px;
-  background: white;
+h1,
+h2,
+h3 {
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+p {
+  margin: 5px 0;
+  line-height: 1.6;
+}
+
+.container {
+  width: 95%;
+  max-width: 1200px;
+  margin: auto;
   padding: 20px;
-  margin: 30px auto;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
-h1 {
-  text-align: center;
+.card {
+  background: #fff;
+  padding: 20px;
+  margin: 15px 0;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
 form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 label {
-  font-weight: bold;
+  font-weight: 500;
+  margin-bottom: 5px;
 }
 
-input {
-  padding: 8px;
+input,
+select,
+button,
+textarea {
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #1abc9c;
+  outline: none;
 }
 
 button {
-  padding: 10px;
-  background: #4cafef;
+  background-color: #1abc9c;
   color: white;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
 }
 
-.results {
-  margin-top: 20px;
+button:hover {
+  background-color: #16a085;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+th,
+td {
+  border: 1px solid #e0e0e0;
   padding: 10px;
-  background: #eef;
-  border-radius: 5px;
+  text-align: center;
+}
+
+th {
+  background: #2c3e50;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  form {
+    gap: 8px;
+  }
 }

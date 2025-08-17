@@ -1,0 +1,32 @@
+.results-table-container {
+    margin-top: 20px;
+    overflow-x: auto;
+}
+
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.results-table th,
+.results-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.results-table th {
+    background-color: #4cafef;
+    color: white;
+    font-weight: bold;
+}
+
+.results-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.results-table tr:hover {
+    background-color: #e0f7fa;
+    transition: 0.2s;
+}

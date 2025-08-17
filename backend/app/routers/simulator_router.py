@@ -7,7 +7,7 @@ from backend.app.services.simulator_service import (
     run_fcfs_simulation, run_priority_simulation, queue_calc_mm_c
 )
 
-router = APIRouter(prefix="/api", tags=["Simulator"])
+router = APIRouter()
 
 @router.post("/simulate", response_model=SimulationResponse)
 def simulate_fcfs(params: SimulationParams):
