@@ -8,8 +8,8 @@ const Simulator = () => {
   const [formData, setFormData] = useState({
     num_customers: 10,
     num_servers: 2,
-    arrival_mean: 5,
-    service_mean: 3,
+    arrival_mean: 5.0,
+    service_mean: 3.0,
   });
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -22,14 +22,7 @@ const Simulator = () => {
     e.preventDefault();
     setLoading(true);
     try {
-        const payload = {
-        num_customers: Number(formData.num_customers),
-        num_servers: Number(formData.num_servers),
-        arrival_mean: Number(formData.arrival_mean),
-        service_mean: Number(formData.service_mean),
-      };
-
-      console.log("Payload:", payload);
+      console.log("Payload:", formData);
 
       const res = await fetch("http://127.0.0.1:8000/api/simulate", {
         method: "POST",
@@ -37,7 +30,15 @@ const Simulator = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      setResults(data);
+      console.log("Simulation Response:", data); 
+      setResults({
+        results: data.results || [],
+        gantt: data.gantt || [],
+        average_wait_time: data.average_wait_time ?? 0,
+        average_turnaround_time: data.average_turnaround_time ?? 0,
+        average_response_time: data.average_response_time ?? 0,
+        server_utilization: data.server_utilization ?? 0,
+      });
     } catch (err) {
       console.error("Error fetching Simulator data:", err);
     } finally {
@@ -53,17 +54,31 @@ const Simulator = () => {
           <label>Number of Customers</label>
           <input
             type="number"
-            name="numCustomers"
-            value={formData.numCustomers}
+            name="num_customers"
+            value={formData.num_customers}
             onChange={handleChange}
           />
           <label>Number of Servers</label>
           <input
             type="number"
-            name="numServers"
-            value={formData.numServers}
+            name="num_servers"
+            value={formData.num_servers}
             onChange={handleChange}
           />
+          {/* <label>Arrival Mean</label>
+          <input
+            type="number"
+            name="arrival_mean"
+            value={formData.arrival_mean}
+            onChange={handleChange}
+          /> */}
+          {/* <label>Service Mean</label>
+          <input
+            type="number"
+            name="service_mean"
+            value={formData.service_mean}
+            onChange={handleChange}
+          /> */}
           <button type="submit" disabled={loading}>
             {loading ? "Simulating..." : "Run Simulation"}
           </button>
@@ -72,9 +87,21 @@ const Simulator = () => {
 
       {results && (
         <>
-          <ResultsTable data={results.table} />
-          <GanttChart data={results.gantt} />
-          <Measures data={results.measures} />
+        <ResultsTable data={results.results} />
+        <GanttChart
+          data={results.gantt.map((task) => ({
+            ...task,
+            server: task.server_id , 
+          }))}
+        />
+        <Measures
+            data={{
+              average_wait_time: results.average_wait_time,
+              average_turnaround_time: results.average_turnaround_time,
+              average_response_time: results.average_response_time,
+              server_utilization: results.server_utilization,
+            }}
+          />
         </>
       )}
     </div>

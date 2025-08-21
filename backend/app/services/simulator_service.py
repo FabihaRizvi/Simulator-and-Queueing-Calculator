@@ -11,6 +11,7 @@ from backend.app.models.simulator_models import (
 
 def _build_response(completed: List[SimulationResult], num_servers: int) -> SimulationResponse:
     avg_wait = sum(c.wait_time for c in completed) / len(completed) if completed else 0.0
+    avg_rt   = sum(c.response_time for c in completed) / len(completed) if completed else 0.0
     avg_tat  = sum(c.turnaround_time for c in completed) / len(completed) if completed else 0.0
     total_time = max((c.end_time for c in completed), default=0.0)
     busy_time = sum(c.service_time for c in completed)
@@ -24,6 +25,7 @@ def _build_response(completed: List[SimulationResult], num_servers: int) -> Simu
         results=completed,
         average_wait_time=avg_wait,
         average_turnaround_time=avg_tat,
+        average_response_time=avg_rt,
         server_utilization=utilization,
         gantt=gantt
     )
@@ -55,8 +57,8 @@ def run_fcfs_simulation(params: SimulationParams) -> SimulationResponse:
         n=params.num_customers,
         arrival_mean=params.arrival_mean,
         service_mean=params.service_mean,
-        priorities=None,
-        max_priority=0  # FCFS, no priority
+        # priorities=None,
+        # max_priority=0  # FCFS, no priority
     )
     servers_free_at = [0.0] * params.num_servers
     completed: List[SimulationResult] = []
@@ -82,8 +84,8 @@ def run_fcfs_simulation(params: SimulationParams) -> SimulationResponse:
             wait_time=wait,
             turnaround_time=tat,
             response_time=rt,
-            server_id=sid,
-            priority=None
+            server_id=sid+1,
+            # priority=None
         ))
 
     return _build_response(completed, params.num_servers)

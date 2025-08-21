@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request 
 from backend.app.routers import simulator_router
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -18,6 +18,13 @@ app.add_middleware(
     allow_methods=["*"],              
     allow_headers=["*"],              
 )
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    print(f"Incoming request: {request.method} {request.url}")
+    response = await call_next(request)
+    print(f"Response status: {response.status_code}")
+    return response
 
 app.include_router(simulator_router.router, prefix="/api", tags=["Simulator"])
 

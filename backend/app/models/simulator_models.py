@@ -35,11 +35,12 @@ class SimulationResult(BaseModel):
     turnaround_time: float
     response_time: float
     server_id: int
-    priority: Optional[int] = None
+    # priority: Optional[int] = None
 
 class SimulationResponse(BaseModel):
     results: List[SimulationResult]
     average_wait_time: float
+    average_response_time: float
     average_turnaround_time: float
     server_utilization: float
     gantt: List[GanttBar]
