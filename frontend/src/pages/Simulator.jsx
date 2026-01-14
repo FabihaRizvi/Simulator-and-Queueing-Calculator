@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ResultsTable from "../components/ResultsTable";
 import GanttChart from "../components/GanttChart";
 import Measures from "../components/Measures";
+import PerformanceCharts from "../components/PerformanceCharts";
 import "../index.css";
 
 const Simulator = () => {
@@ -24,13 +25,13 @@ const Simulator = () => {
     try {
       console.log("Payload:", formData);
 
-      const res = await fetch("http://127.0.0.1:8000/api/simulate", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || "http://127.0.0.1:8000"}/api/simulate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log("Simulation Response:", data); 
+      console.log("Simulation Response:", data);
       setResults({
         results: data.results || [],
         gantt: data.gantt || [],
@@ -87,14 +88,14 @@ const Simulator = () => {
 
       {results && (
         <>
-        <ResultsTable data={results.results} />
-        <GanttChart
-          data={results.gantt.map((task) => ({
-            ...task,
-            server: task.server_id , 
-          }))}
-        />
-        <Measures
+          <ResultsTable data={results.results} />
+          <GanttChart
+            data={results.gantt.map((task) => ({
+              ...task,
+              server: task.server_id,
+            }))}
+          />
+          <Measures
             data={{
               average_wait_time: results.average_wait_time,
               average_turnaround_time: results.average_turnaround_time,
@@ -102,6 +103,7 @@ const Simulator = () => {
               server_utilization: results.server_utilization,
             }}
           />
+          <PerformanceCharts data={results.results} />
         </>
       )}
     </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import "./ResultsTable.css"; 
+import "./ResultsTable.css";
 
 export default function ResultsTable({ data }) {
   if (!data || data.length === 0) return null;
@@ -18,7 +18,7 @@ export default function ResultsTable({ data }) {
           {data.map((row, idx) => (
             <tr key={idx}>
               {Object.values(row).map((value, i) => (
-                <td key={i}>{value}</td>
+                <td key={i}>{typeof value === 'number' ? value.toFixed(4) : value}</td>
               ))}
             </tr>
           ))}

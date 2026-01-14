@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request 
-from backend.app.routers import simulator_router
+from app.routers import simulator_router
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="Simulator API", version="1.0.0")

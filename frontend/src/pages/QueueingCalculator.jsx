@@ -4,8 +4,8 @@ import "../index.css";
 
 const QueueingCalculator = () => {
   const [formData, setFormData] = useState({
-    arrivalRate: 5,
-    serviceRate: 7,
+    arrival_rate: 5,
+    service_rate: 7,
     servers: 2,
   });
   const [results, setResults] = useState(null);
@@ -19,13 +19,21 @@ const QueueingCalculator = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/queueing/calculate", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || "http://127.0.0.1:8000"}/api/queueing/calculate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      setResults(data);
+      setResults({
+        utilization: data.utilization,
+        P0: data.P0,
+        Pw: data.Pw,
+        Lq: data.Lq,
+        Wq: data.Wq,
+        W: data.W,
+        L: data.L,
+      });
     } catch (err) {
       console.error("Error fetching Queueing Calculator data:", err);
     } finally {
@@ -41,15 +49,15 @@ const QueueingCalculator = () => {
           <label>Arrival Rate (λ)</label>
           <input
             type="number"
-            name="arrivalRate"
-            value={formData.arrivalRate}
+            name="arrival_rate"
+            value={formData.arrival_rate}
             onChange={handleChange}
           />
           <label>Service Rate (μ)</label>
           <input
             type="number"
-            name="serviceRate"
-            value={formData.serviceRate}
+            name="service_rate"
+            value={formData.service_rate}
             onChange={handleChange}
           />
           <label>Servers (c)</label>
@@ -65,7 +73,7 @@ const QueueingCalculator = () => {
         </form>
       </div>
 
-      {results && <Measures data={results.measures} />}
+      {results && <Measures data={results} />}
     </div>
   );
 };

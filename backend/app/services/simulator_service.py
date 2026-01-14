@@ -3,7 +3,7 @@ import heapq
 import random
 from typing import List, Tuple, Optional
 
-from backend.app.models.simulator_models import (
+from app.models.simulator_models import (
     SimulationParams, PrioritySimulationParams,
     SimulationResult, SimulationResponse, GanttBar,
     QueueCalcParams, QueueCalcResponse
@@ -163,7 +163,7 @@ def run_priority_simulation(params: PrioritySimulationParams) -> SimulationRespo
                     wait_time=wait,
                     turnaround_time=tat,
                     response_time=rt,
-                    server_id=s,
+                    server_id=s+1,
                     priority=c.get("priority")
                 ))
 

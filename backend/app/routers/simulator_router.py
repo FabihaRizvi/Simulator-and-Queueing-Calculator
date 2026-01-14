@@ -1,9 +1,9 @@
 from fastapi import APIRouter, HTTPException
-from backend.app.models.simulator_models import (
+from app.models.simulator_models import (
     SimulationParams, PrioritySimulationParams, SimulationResponse,
     QueueCalcParams, QueueCalcResponse
 )
-from backend.app.services.simulator_service import (
+from app.services.simulator_service import (
     run_fcfs_simulation, run_priority_simulation, queue_calc_mm_c
 )
 
